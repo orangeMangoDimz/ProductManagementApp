@@ -7,19 +7,16 @@
 @endsection
 
 @section('content')
-    <main class="form-signin w-100 m-auto">
-        <form action="#" method="POST">
+    <main class="card p-3 form-signin w-100 m-auto">
+        <form action="{{ route('login') }}" method="POST">
             @csrf
-            <img class="mb-4" src="{{ asset('imgaes/logo/Logopng.png') }}" alt="logo" width="72" height="57">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
             {{-- email --}}
             <div class="form-floating">
-                <input type="email"
-                    class="form-control 
+                <input type="email" class="form-control 
                 @error('email') is-invalid @enderror"
-                    id="floatingInput"
-                    placeholder="name@example.com" name="email" value="{{ old('email') }}">
+                    id="floatingInput" placeholder="name@example.com" name="email" value="{{ old('email') }}">
                 <label for="floatingInput">Email address</label>
             </div>
 
@@ -40,25 +37,18 @@
             </div>
 
             {{-- show error message --}}
-            @error('email')
-                <div class="text-danger m-3">
-                    <small>
+            <?php $dummyVarError = ['email', 'password']; ?>
+            @foreach ($dummyVarError as $error)
+                @error($error)
+                    <div class="text-danger mb-3 bg-danger-subtle p-3 text-center fw-semibold">
                         {{ $message }}
-                    </small>
-                </div>
-            @enderror
-
-            @error('password')
-                <div class="text-danger m-3">
-                    <small>
-                        {{ $message }}
-                    </small>
-                </div>
-            @enderror
+                    </div>
+                @enderror
+            @endforeach
 
             {{-- sign up / register --}}
             <button class="w-100 btn btn-lg btn-primary mb-3" type="submit">Sign in</button>
-            <p class="register-link">Don't have account ? <a href="#">Create new account here</a>
+            <p class="register-link">Don't have account ? <a href="{{ route('register.page') }}">Create new account here</a>
             </p>
 
         </form>

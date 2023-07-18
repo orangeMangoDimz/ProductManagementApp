@@ -10,15 +10,15 @@
                 @auth
                     <li class="nav-item dropdown">
                         <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Username
+                            {{ auth()->user()->username }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href='#'>Logout</a></li>
+                            <li><a class="dropdown-item" href='{{ route('logout') }}'>Logout</a></li>
                         </ul>
                     </li>
                 @else
-                    <a class="btn btn-primary me-1 me-3" href="#">Login</a>
-                    <a class="btn btn-light" href="#">Register</a>
+                    <a class="btn btn-primary me-1 me-3" href="{{ route('login.page') }}">Login</a>
+                    <a class="btn btn-light" href="{{ route('register.page') }}">Register</a>
                 @endauth
             </ul>
         </div>

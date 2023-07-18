@@ -16,6 +16,7 @@ class AppController extends Controller
 
     public function index()
     {
+        if (!auth()->check()) return view('auth.login');
         $products = $this->service->getAllProducts();
         return view('app.index', compact('products'));
     }

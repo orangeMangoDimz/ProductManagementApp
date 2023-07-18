@@ -7,10 +7,9 @@
 @endsection
 
 @section('content')
-    <main class="form-signin w-100 m-auto">
+    <main class="card p-3 form-signin w-100 m-auto">
         <form action="#" method="POST">
             @csrf
-            <img class="mb-4" src="{{ asset('imgaes/logo/Logopng.png') }}" alt="" width="72" height="57">
             <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
 
             {{-- Username --}}
@@ -47,35 +46,15 @@
             </div>
 
             {{-- error message --}}
-            @error('username')
-                <div class="text-danger m-3">
-                    <small>
+            <?php $dummyVarError = ['username', 'email', 'password']; ?>
+            @foreach ($dummyVarError as $error)
+                @error($error)
+                    <div class="text-danger mb-3 bg-danger-subtle p-3 text-center fw-semibold">
                         {{ $message }}
-                    </small>
-                </div>
-            @enderror
-            @error('email')
-                <div class="text-danger m-3">
-                    <small>
-                        {{ $message }}
-                    </small>
-                </div>
-            @enderror
-            @error('password')
-                <div class="text-danger m-3">
-                    <small>
-                        {{ $message }}
-                    </small>
-                </div>
-            @enderror
-            @error('password_confirmation')
-                <div class="text-danger m-3">
-                    <small>
-                        {{ $message }}
-                    </small>
-                </div>
-            @enderror
-            
+                    </div>
+                @enderror
+            @endforeach
+
             <button class="w-100 btn btn-lg btn-primary mb-3" type="submit">Sign Up</button>
             <p class="register-link">Allready have account ? <a href="#">Sign in here</a>
             </p>
