@@ -14,15 +14,15 @@
             </div>
 
             {{-- <form action="{{ route('store') }}" method="POST" enctype="multipart/form-data"> --}}
-            <form action=" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('product.update', $products->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 {{-- Cover --}}
                 <div class="mb-3">
                     <label for="productCover" class="fw-semibold form-label">Product Cover</label>
-                    <img class="d-block mb-3" src="{{ asset('images/product/'. $products->cover) }}" alt="Cover" id="productImagePreview" width="100%">
+                    <img class="d-block mb-3" src="{{ asset('images/product/'. $products->cover) }}" alt="Cover" id="productImagePreview" width="300" height="225">
                     <input class="form-control" type="file" id="productCover" name="cover"
-                        accept="image/png, image/jpg, image/jpeg" onchange="loadImage(event)">
+                        accept="image/png, image/jpg, image/jpeg" onchange="loadImage(event)" value="{{ $products->cover }}">
                 </div>
 
                 {{-- title --}}
@@ -49,7 +49,7 @@
                 <div class="mb-3 row">
                     <label for="productDescription" class="fw-semibold col-sm-2 col-form-label">Description</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" placeholder="Product Description" id="productDescription" name="description" rows="3"></textarea value="{{ $products->description }}">
+                        <textarea class="form-control" placeholder="Product Description" id="productDescription" name="description" rows="3">{{ $products->description }}</textarea>
                     </div>
                 </div>
 
@@ -70,7 +70,7 @@
                         <input type="number" class="form-control ms-2" id="productPrice" name="price"
                             placeholder="Product Price" value="{{ $products->price }}">
                         </span>
-                    </div>1
+                    </div>
                 </div>
 
                 <?php $dummyVarError = ['cover', 'title', 'description', 'stock', 'price']; ?>
@@ -83,7 +83,8 @@
             @endforeach
 
             {{-- submit button --}}
-            <div class="mb-5">
+            <div class="btn-group mb-5">
+                <a href="{{ route('home.page') }}" class="btn btn-outline-primary me-3">Back</a>
                 <button type="submit" class="btn btn-primary">Update</button>
             </div>
 
@@ -94,5 +95,5 @@
 
 @section('script')
     {{-- manual Js --}}
-                            <script src="{{ asset('js/product/product.js') }}"></script>
+    <script src="{{ asset('js/product/product.js') }}"></script>
 @endsection

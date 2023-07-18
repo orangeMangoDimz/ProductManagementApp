@@ -93,7 +93,7 @@
                                         <td><img class="w-50 d-block" src="{{ asset('images/product/' . $product->cover) }}"
                                                 alt="cover"></td>
                                         <td>{{ $product->title }}</td>
-                                        <td>{{ $product->product_cateogry->name }}</td>
+                                        <td>{{ $product->product_category->name }}</td>
                                         <td class="text-start"> {{ $product->description }}</td>
                                         <td>{{ $product->stock }}</td>
                                         <td>Rp {{ $product->price }}</td>
@@ -101,8 +101,12 @@
                                             <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
                                                 href="{{ route('product.edit', $product->id) }}">Edit</a>
                                             <br>
-                                            <a class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
-                                                href="#">Delete</a>
+                                            <form action="{{ route('product.destroy', $product->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                                                >Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

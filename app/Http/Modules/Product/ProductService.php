@@ -20,9 +20,24 @@ class ProductService
         return $this->repository->getAllProducts();
     }
 
+    public function getProductById(String $id): Product
+    {
+        return $this->repository->getProductById($id);
+    }
+
     public function storeProduct(array $data): Product
     {
         return $this->repository->storeProduct($data);
+    }
+
+    public function updateProduct(String $id, array $data): bool
+    {
+        return $this->repository->updateProduct($id, $data);
+    }
+
+    public function deleteProductById(String $id)
+    {
+        return $this->repository->deleteProductById($id);
     }
 
     public function storeImageCover(UploadedFile $upload): String

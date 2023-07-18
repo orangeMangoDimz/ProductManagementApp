@@ -50,7 +50,8 @@
                 <div class="mb-3 row">
                     <label for="productDescription" class="fw-semibold col-sm-2 col-form-label">Description</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" placeholder="Product Description" id="productDescription" name="description" rows="3"></textarea value="{{ old('description') }}">
+                        <textarea class="form-control" placeholder="Product Description" id="productDescription" 
+                        name="description" rows="3">{{ old('description') }}</textarea>
                     </div>
                 </div>
 
@@ -84,7 +85,8 @@
             @endforeach
 
             {{-- submit button --}}
-            <div class="mb-5">
+            <div class="btn-group mb-5">
+                <a href="{{ route('home.page') }}" class="btn btn-outline-primary me-3">Back</a>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
 

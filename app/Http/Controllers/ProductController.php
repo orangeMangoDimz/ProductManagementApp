@@ -6,6 +6,7 @@ use App\http\Modules\Product\ProductService;
 use App\http\Modules\ProductCategory\ProductCategoryService;
 use App\Http\Requests\ProductRequest;
 use App\Models\Product;
+use GuzzleHttp\Psr7\Request;
 
 class ProductController extends Controller
 {
@@ -27,23 +28,42 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $products = Product::find($id);
+        $products = $this->service->getProductById($id);
         $productCategories = $this->productsCategoryService->getAllProductCategory();
         return view('product.edit', compact(['products', 'productCategories']));
+    }
+
+    public function update($id, ProductRequest $request)
+    {
+        $product = $this->service->getProductById($id);
+        $validated = $request->validated();
+        $request->has('cover') ? $validated['cover'] = $this->service->storeImageCover($request->file('cover')) : '';
+
+        $updated = $this->service->updateProduct($product->id, $validated);
+
+        return $updated
+        ? redirect(route('home.page'))->with('success', 'Successfully Updated a Product!')
+        : redirect()->back()->with('error', 'Oops!, Something is Wrong!');
     }
 
     public function store(ProductRequest $request)
     {
         $validated = $request->validated();
-        if ($request->hasFile('cover'))
-        {
-            $validated['cover'] = $this->service->storeImageCover($request->file('cover'));
-        }
-
+        $request->has('cover') ? $validated['cover'] = $this->service->storeImageCover($request->file('cover')) : '';
         $stored = $this->service->storeProduct($validated);
 
         return $stored
         ? redirect(route('home.page'))->with('success', 'Successfully Create a New Product!')
+        : redirect()->back()->with('error', 'Oops!, Something is Wrong!');
+    }
+
+    public function destory($id)
+    {
+        $product = $this->service->getProductById($id);
+        $destroyed = $this->service->deleteProductById($product->id);
+
+        return $destroyed
+        ? redirect(route('home.page'))->with('success', 'Successfully Delete a Product!')
         : redirect()->back()->with('error', 'Oops!, Something is Wrong!');
     }
 }
