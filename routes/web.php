@@ -29,6 +29,7 @@ Route::middleware('admin')->group(function(){
 
         Route::middleware('guest')->group(function(){
             Route::get('/', [AppController::class, 'index'])->name('home.page');
+            Route::get('/product/show/{id}', [ProductController::class, 'show'])->name('product.show');
             Route::get('/login', [LoginController::class, 'login'])->name('login.page');
             Route::post('/login', [LoginController::class, 'store'])->name('login');
             

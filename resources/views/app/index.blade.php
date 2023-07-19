@@ -39,7 +39,7 @@
                         {{-- card 1 --}}
                         @foreach ($products as $product)
                             <div class="col">
-                                <div class="card shadow-sm" data-key="#">
+                                <div class="card shadow-sm" data-productid="{{ $product->id }}" onchange="showProduct(event)">
                                     <img src="{{ asset('images/product/' . $product->cover) }}" alt="cover"
                                         width="100%">
                                     <div class="card-body">
@@ -142,5 +142,5 @@
 @section('script')
     {{-- sweetAlert2 notification --}}
     @include('partial.sweet_alert')
-    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+    <script src="{{ asset('js/product/product.js') }}"></script>
 @endsection

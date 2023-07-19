@@ -19,6 +19,12 @@ class ProductController extends Controller
         $this->productsCategoryService = $productCategoryService;
     }
 
+    public function show($id)
+    {
+        $product = $this->service->getProductById($id);
+        return view('product.show', compact('product'));
+    }
+
     public function create()
     {
         $products = $this->service->getAllProducts();
