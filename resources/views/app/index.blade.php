@@ -39,7 +39,7 @@
                         {{-- card 1 --}}
                         @foreach ($products as $product)
                             <div class="col">
-                                <div class="card shadow-sm" data-productid="{{ $product->id }}" onchange="showProduct(event)">
+                                <div class="card shadow-sm" data-productid="{{ $product->id }}" onclick="showProduct(event)">
                                     <img src="{{ asset('images/product/' . $product->cover) }}" alt="cover"
                                         width="100%">
                                     <div class="card-body">

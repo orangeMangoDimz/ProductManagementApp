@@ -1,6 +1,7 @@
 <?php
 namespace App\http\Modules\User;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,6 +34,31 @@ class UserService
     public function insertNewUser(array $data): User
     {
         return $this->repository->insertNewUser($data);
+    }
+
+    public function addToCart(Product $product): void
+    {
+        $id = $product->id;
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$id]))
+        {
+            $cart[$id]['quantity']++;
+            echo "1";
+        }
+        else
+        {
+            $cart[$id] = [
+                "cover" => $product->cover,
+                "title" => $product->title,
+                "product_category_id" => $product->product_category->id,
+                "description" => $product->description,
+                "quantity" => 1,
+                "price" => $product->price
+            ];
+            echo "2";
+        }
+        session()->put('cart', $cart);
     }
 
 }

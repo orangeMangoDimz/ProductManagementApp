@@ -19,6 +19,7 @@ class LoginController extends Controller
     public function login()
     {
         return !auth()->check() ? view('auth.login') : redirect()->back();
+        // return view('auth.login');
     }
 
     public function store(LoginRequest $request)

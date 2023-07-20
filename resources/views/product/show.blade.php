@@ -9,60 +9,76 @@
 @section('content')
     <main>
         <div class="container bg-white p-3 py-4 px-md-5">
+            <a class="col-3 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+            href="{{ route('home.page', $product->id) }}">Back</a>
             <div
                 class="d-flex justify-content-between flex-column flex-md-row
                   align-items-center py-3 border-bottom">
-                <h2 class="text-center fw-bold">Jaket Pria</h2>
+                <h2 class="text-center fw-bold">{{ $product->title }}</h2>
                 <hr>
             </div>
             <div class="row border-bottom">
-                <div class="col-lg-6">
-                    <img src="{{ asset('imgaes/product/Example-1.jpg') }}" alt="cover" width="100%">
+                <div>
+                    <img src="{{ asset('images/product/' . $product->cover) }}" alt="cover" width="300" height="225">
                 </div>
-                <div class="col-lg-6">
+                <div>
                     <div class="my-3">
-
-                        {{-- admin only --}}
-                        {{-- <a href="#" class="btn btn-light">
-                            <i class="fa-solid fa-pen-to-square">Edit</i>
-                        </a> --}}
-
-                        {{-- admin only --}}
-                        {{-- <form class="d-inline" action="#" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-light">
-                                <i class="fa-solid fa-trash-can">Delete</i>
-                            </button>
-                        </form> --}}
-
                     </div>
                     <div class="my-3">
                         <h5 class="fw-bold">Product Details : </h5>
-                        <p>
-                            Category : Jaket Pria <br>
-                            Price : Rp 259.000 <br>
-                        </p>
+                        <div class="row">
+                            <h5 class="col-4"><span
+                                    class="badge text-bg-warning">{{ $product->product_category->name }}</span> </h5>
+                            <p class="col-4">Stock: {{ $product->stock }}</p>
+                            <p class="text-danger col-4">Rp {{ number_format($product->price, 2) }} </p>
+                        </div>
                     </div>
                     <div class="my-3">
                         <h5 class="fw-bold">Description : </h5>
                         <p class="story-synopsis fs-6">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                            non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            {{ $product->description }}
                         </p>
                     </div>
+                    @if (auth()->user()->username !== 'admin')
+                            <div class="d-flex">
+                                <button class="btn btn-link px-2 text-decoration-none fw-bold fs-4"
+                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                    <i class="fas fa-minus">-</i>
+                                </button>
+
+                                <input id="form1" min="0" name="quantity" value="2" type="number" disabled
+                                    class="form-control form-control-sm bg-white text-center w-25" />
+
+                                <button class="btn btn-link px-2 text-decoration-none fw-bold fs-5"
+                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                    <i class="fas fa-plus">+</i>
+                                </button>
+                            </div>
+                            <div class="row">
+                                <a class="col-6 ink-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                                    href="{{ route('cart', $product->id) }}">Add to Cart</a>
+
+                            <a class="col-6 col-3 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"
+                                href="#">Buy Now</a>
+                        </div>
+                    @endif
+                    {{-- admin only --}}
+                    @can('admin')
+                        <a href="#"
+                            class="col-6 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                            Edit
+                        </a>
+                        <form class="d-inline" action="#" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit">
+                                <a
+                                    class="col-6 link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">Delete</a>
+                            </button>
+                        </form>
+                    @endcan
                 </div>
             </div>
-            {{-- <div class="row my-4 story-content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                anim id est laborum.
-            </div> --}}
         </div>
     </main>
 @endsection
