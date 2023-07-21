@@ -16,7 +16,7 @@
                             <li><a class="dropdown-item" href='{{ route('logout') }}'>Logout</a></li>
                         </ul>
                     </li>
-                    <button class="btn btn-dark" aria-expanded="false">
+                    <button class="btn btn-dark" aria-expanded="false" onclick="window.location.href = '/cart'">
                        My Cart <span class="ms-2 badge text-bg-primary">{{ count( (array)session('cart')) }}</span>
                     </button>
                 @else

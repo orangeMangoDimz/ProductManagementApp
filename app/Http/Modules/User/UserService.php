@@ -51,7 +51,7 @@ class UserService
             $cart[$id] = [
                 "cover" => $product->cover,
                 "title" => $product->title,
-                "product_category_id" => $product->product_category->id,
+                "category" => $product->product_category->name,
                 "description" => $product->description,
                 "quantity" => 1,
                 "price" => $product->price
