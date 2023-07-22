@@ -28,4 +28,9 @@ class UserController extends Controller
         $this->userService->addToCart($product);
         return redirect(route('home.page'))->with('success', 'Successfully Added to Cart!');
     }
+
+    public function destroy()
+    {
+        
+    }
 }
