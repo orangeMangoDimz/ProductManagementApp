@@ -51,6 +51,11 @@ class ProductService
     
         return $fileName;
     }
+
+    public function deleteProductQuantity(String $id, String $quantity)
+    {
+        $this->repository->deleteProductQuantity($id, $quantity);
+    }
 }
 
 ?>

@@ -31,6 +31,13 @@ class ProductRepository
     {
         return Product::destroy($id);
     }
+
+    public function deleteProductQuantity(String $id, String $quantity)
+    {
+        $product = Product::find($id);
+         $newQuantity = (int) $product->stock - (int) $quantity;
+        Product::where('id', $id)->update(['stock' => $newQuantity]);
+    }
 }
 
 ?>

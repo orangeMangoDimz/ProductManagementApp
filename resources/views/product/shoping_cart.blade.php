@@ -8,7 +8,6 @@
         <div class="container h-100 py-5">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-10">
-
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
                     </div>
@@ -38,7 +37,7 @@
                                             onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                                             <i class="fas fa-minus">-</i>
                                         </button>
-                                        <input id="form1" min="0" name="quantity" value="2" type="number"
+                                        <input id="form1" min="0" name="quantity" value="{{ $detail['quantity'] }}" type="number"
                                             disabled class="form-control form-control-sm bg-white text-center" />
                                         <button class="btn btn-link px-2 text-decoration-none fw-bold fs-5"
                                             onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
@@ -51,7 +50,11 @@
                                     </div>
 
                                     <div class="col-2">
-                                        <a class="btn btn-danger">Delete</a>
+                                        <form action="{{ route('cart.destroy', $detail['id']) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
                                     </div>
 
                                     {{-- <div class="col-md-1 col-lg-1 col-xl-1 text-end">
@@ -71,7 +74,7 @@
                                 </select>
                             </div>
                         </div>
-                        <?php $total += $detail['price'] ?>
+                        <?php $total += $detail['price'] * $detail['quantity'] ?>
                     @endforeach
 {{-- 
                     <select class="form-select" aria-label="Default select example">
@@ -105,14 +108,12 @@
                         <hr>
                         <div class="mt-3 mb-3 d-flex justify-content-between">
                             <h4 class="fw-bold">Total</h4>
-                            <h4 class="fw-bold text-danger">Rp {{ number_format($total) }}</h4>
+                            <h4 class="fw-bold text-danger">Rp {{ number_format($total + 10000 + 1000) }}</h4>
                         </div>
                     </div>
 
-                    <div class="card">
-                        <div class="card-body">
-                            <button type="button" class="btn btn-warning btn-block btn-lg">Proceed to Pay</button>
-                        </div>
+                    <div class="t-3">
+                        <a type="button" class="w-100 btn btn-warning btn-block btn-lg" href="{{ route('checkout.page') }}">Checkout Now!</a>
                     </div>
 
                 </div>
@@ -122,5 +123,6 @@
 @endsection
 
 @section('script')
+    @include('partial.sweet_alert')
     <script src="{{ asset('js/cart/cart.js') }}"></script>
 @endsection

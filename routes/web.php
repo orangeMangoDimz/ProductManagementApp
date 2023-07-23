@@ -37,7 +37,9 @@ Route::delete('/delete/{id}', [ProductController::class, 'destory'])->name('prod
 
 Route::get('/cart', [UserController::class, 'cart'])->name('cart.page');
 Route::get('/cart/{id}', [UserController::class, 'store'])->name('cart');
-Route::delete('/remove', [UserController::class, 'destroy'])->name('cart.destroy');
+Route::delete('/cart/remove/{id}', [UserController::class, 'destroy'])->name('cart.destroy');
+
+Route::get('/checkout', [UserController::class, 'checkout'])->name('checkout.page');
 
 // Route::middleware('admin')->group(function(){
 //     Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');
