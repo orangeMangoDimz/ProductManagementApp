@@ -13,7 +13,9 @@ class Product extends Model
     public $timestamps = false;
     public $with = ['product_category'];
 
-    protected $guarded = ['id'];
+    protected $guarded = ['id '];
+
+    protected $keyType = 'string';
 
     // public function user()
     // {
@@ -23,5 +25,10 @@ class Product extends Model
     public function product_category()
     {
         return $this->belongsTo(ProductCategory::class, 'product_category_id');
+    }
+
+    public function invoice()
+    {
+        return $this->hasMany(Invoice::class);
     }
 }

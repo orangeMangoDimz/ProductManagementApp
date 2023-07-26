@@ -75,32 +75,28 @@ class UserService
         }
     }
 
-    public function addToInvoice(): array
+    public function addToInvoice()
     {
         $carts = session()->get('cart', []);
-        // $p = session()->get('invoice', []);
-        // session()->put('invoice', $carts);
-
-        $invoices = [];
+        $totalPrice = 0;
+        $productId = array();
+        $invoiceQuantity = array();
+        $userId = Auth::user()->id;
 
         foreach($carts as $cart)
         {
-            $userId = Auth::user()->id;
 
-            $productId = $cart['id'];
-            $quantity = $cart['quantity'];
-            $this->productService->deleteProductQuantity($productId, $quantity);
+            $id = $cart['id'];
+            $cartQuantity = $cart['quantity'];
+            $this->productService->deleteProductQuantity($id, $cartQuantity);
 
-            (String) $totalPrice = (int) $cart['price'] * (int) $cart['quantity'];
-
-            // insert into invoice table model
-            // cannot add procuts as array
-            $invoices += $this->invoiceService->insertNewInvoice( $userId, $productId, $totalPrice);
-
-            $this->deleteCartById($productId);
+            $totalPrice += (int) $cart['price'] * (int) $cart['quantity'];
+            array_push($productId, $id);
+            array_push($invoiceQuantity, $cartQuantity);
+            
+            $this->deleteCartById($id);
         }
-
-        return $invoices;
+        $this->invoiceService->insertNewInvoice( $userId, $productId, $invoiceQuantity, (String) $totalPrice);
 
         // unset($cart);
         // session()->forget('cart');

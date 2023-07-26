@@ -2,19 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\http\Modules\Invoice\InvoiceService;
 use App\http\Modules\Product\ProductService;
 use App\http\Modules\User\UserService;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
     protected ProductService $service;
     protected UserService $userService;
+    protected InvoiceService $invoiceService;
 
-    public function __construct(ProductService $service, UserService $userService)
+    public function __construct(
+        ProductService $service, 
+        UserService $userService,
+         InvoiceService $invoiceService
+         )
     {
         $this->service = $service;
         $this->userService = $userService;
+        $this->invoiceService = $invoiceService;
     }
 
     public function cart()
@@ -45,8 +55,29 @@ class UserController extends Controller
 
     public function checkout()
     {
-        $invoices = $this->userService->addToInvoice();
-        print_r($invoices);
-        // return view('invoice.invoice');
+        $this->userService->addToInvoice();
+        $userId = auth()->user()->id;
+        $invoice = $this->invoiceService->getCurrentInvoice($userId);
+        $idx = 0;
+
+        // get detail information on product_id column in invoices table
+        foreach ( explode(',' , $invoice->product_id) as $product_id)
+        {
+            $products[$idx++] = $this->service->getProductById($product_id);
+        }
+        
+        // get buyed product quantity
+        $idx = 0;
+        foreach ( explode(',' , $invoice->quantity) as $quantity)
+        {
+            (int) $products[$idx++]['stock'] = $quantity;
+        }   
+
+        // foreach($products as $product)
+        // {
+        //     echo $product['stock'] . '<br>';
+        // }
+        // $products = Product::all();
+        return view('invoice.invoice', compact(['invoice', 'products']));
     }
 }

@@ -13,9 +13,14 @@ class InvoiceService
         $this->repository = $repository;
     }
 
-    public function insertNewInvoice(String $userId, String $productId, String $totalPrice): Invoice
+    public function insertNewInvoice(String $userId, array $productId, array $invoiceQuantity, String $totalPrice): Invoice
     {
-        return $this->repository->insertNewInvoice( $userId, $productId, $totalPrice);
+        return $this->repository->insertNewInvoice( $userId, $productId, $invoiceQuantity, $totalPrice);
+    }
+
+    public function getCurrentInvoice(String $userId): Invoice
+    {
+        return $this->repository->getCurrentInvoice($userId);
     }
 }
 
