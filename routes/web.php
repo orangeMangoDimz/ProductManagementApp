@@ -40,6 +40,9 @@ Route::get('/cart/{id}', [UserController::class, 'store'])->name('cart');
 Route::delete('/cart/remove/{id}', [UserController::class, 'destroy'])->name('cart.destroy');
 
 Route::get('/checkout', [UserController::class, 'checkout'])->name('checkout.page');
+Route::get('/checkout/store', [UserController::class, 'storeCheckout'])->name('checkout.store');
+
+Route::get('invoice', [UserController::class, 'invoice'])->name('invoice.page');
 
 // Route::middleware('admin')->group(function(){
 //     Route::get('/product/create', [ProductController::class, 'create'])->name('product.create');

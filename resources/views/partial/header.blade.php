@@ -16,13 +16,19 @@
                             <li><a class="dropdown-item" href='{{ route('logout') }}'>Logout</a></li>
                         </ul>
                     </li>
+                    @if (auth()->user()->username !== 'admin')
                     <button class="btn btn-dark" aria-expanded="false" onclick="window.location.href = '/cart'">
-                       My Cart <span class="ms-2 badge text-bg-primary">{{ count( (array)session('cart')) }}</span>
+                        My Cart <span class="ms-2 badge text-bg-primary">{{ count((array) session('cart')) }}</span>
                     </button>
+                    @endif
                 @else
                     <a class="btn btn-primary me-1 me-3" href="{{ route('login.page') }}">Login</a>
                     <a class="btn btn-light" href="{{ route('register.page') }}">Register</a>
                 @endauth
+                @can('admin')
+                    <a class="btn btn-dark" href="{{ route('invoice.page') }}">Invoice</a>
+                    <a class="btn btn-dark" href="{{ route('home.page') }}">Products</a>
+                @endcan
             </ul>
         </div>
     </div>

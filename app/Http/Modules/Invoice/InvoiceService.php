@@ -3,6 +3,8 @@
 namespace App\http\Modules\Invoice;
 
 use App\Models\Invoice;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class InvoiceService
 {
@@ -18,9 +20,9 @@ class InvoiceService
         return $this->repository->insertNewInvoice( $userId, $productId, $invoiceQuantity, $totalPrice);
     }
 
-    public function getCurrentInvoice(String $userId): Invoice
+    public function getAllInvoices(): LengthAwarePaginator
     {
-        return $this->repository->getCurrentInvoice($userId);
+        return $this->repository->getAllInvoices();
     }
 }
 

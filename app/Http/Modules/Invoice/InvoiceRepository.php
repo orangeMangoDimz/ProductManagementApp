@@ -2,7 +2,9 @@
 
 namespace App\http\Modules\Invoice;
 
+use Illuminate\Database\Eloquent\Collection;
 use App\Models\Invoice;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class InvoiceRepository
 {
@@ -16,9 +18,9 @@ class InvoiceRepository
         ]);
     }
 
-    public function getCurrentInvoice(String $userId): Invoice
+    public function getAllInvoices(): LengthAwarePaginator
     {
-        return Invoice::where('user_id', $userId)->orderBy('created_at', 'DESC')->first();
+        return Invoice::paginate(1);
     }
 }
 

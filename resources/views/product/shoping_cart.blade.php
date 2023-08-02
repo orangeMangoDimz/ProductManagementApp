@@ -1,8 +1,10 @@
 @extends('layout.app')
 
-@section('title', 'Shoping Cart')
+@section('title', 'Shopping Cart')
 
 @section('content')
+
+    @if (session('cart'))
 
     <section class="h-100" style="background-color: #eee;">
         <div class="container h-100 py-5">
@@ -33,15 +35,9 @@
 
                                     {{-- change quantity --}}
                                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                        {{-- <button class="btn btn-link px-2 text-decoration-none fw-bold fs-4"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                            <i class="fas fa-minus">-</i> --}}
                                         </button>
                                         <input id="form1" min="0" name="quantity" value="{{ $detail['quantity'] }}" type="number"
                                             disabled class="form-control form-control-sm bg-white text-center" />
-                                        {{-- <button class="btn btn-link px-2 text-decoration-none fw-bold fs-5"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                            <i class="fas fa-plus">+</i>     --}}
                                         </button>
                                     </div>
 
@@ -56,10 +52,6 @@
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
                                     </div>
-
-                                    {{-- <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                        <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
-                                    </div> --}}
                                     
                                 </div>
                             </div>
@@ -76,13 +68,6 @@
                         </div>
                         <?php $total += $detail['price'] * $detail['quantity'] ?>
                     @endforeach
-{{-- 
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select> --}}
 
                     <div class="card mb-4">
                         <div class="card-body p-4 d-flex flex-row">
@@ -120,6 +105,16 @@
             </div>
         </div>
     </section>
+        
+    @else
+
+    <div class="container m-5">
+        <h1 class="text-center text-danger fw-semibold">There's No Cart Yet!</h1>
+    </div>
+
+    @endif
+
+   
 @endsection
 
 @section('script')

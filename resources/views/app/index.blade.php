@@ -39,7 +39,8 @@
                         {{-- card 1 --}}
                         @foreach ($products as $product)
                             <div class="col">
-                                <div class="card shadow-sm" data-productid="{{ $product->id }}" onclick="showProduct(event)">
+                                <div class="card shadow-sm" data-productid="{{ $product->id }}"
+                                    onclick="showProduct(event)">
                                     <img src="{{ asset('images/product/' . $product->cover) }}" alt="cover"
                                         width="100%">
                                     <div class="card-body">
@@ -98,13 +99,13 @@
                                                 <td>
                                                     <form action="{{ route('product.edit', $product->id) }}" method="GET">
                                                         @csrf
-                                                        <button class="btn btn-outline-primary" type="submit">Edit</button>
+                                                        <button class="btn btn-warning" type="submit">Edit</button>
                                                     </form>
                                                     <br>
                                                     <form action="{{ route('product.destroy', $product->id) }}" method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-outline-primary">Delete</button>
+                                                        <button type="submit" class="btn btn-outline-danger">Delete</button>
                                                     </form>
                                                 </td>
                                             </tr>
@@ -116,8 +117,7 @@
 
                         <div class="mt-5 mb-5">
                             <h3 class="fw-bold mb-3 text-start">More Actions</h3>
-                            <a class="btn btn-primary me-2" href="{{ route('product.create') }}">Create New Product </a>
-                            <a class="btn btn-primary" href="#">View All Invoices
+                            <a class="btn btn-warning me-2" href="{{ route('product.create') }}">Create New Product </a>
                             </a>
                         </div>
 

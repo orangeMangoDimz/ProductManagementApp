@@ -97,9 +97,6 @@ class UserService
             $this->deleteCartById($id);
         }
         $this->invoiceService->insertNewInvoice( $userId, $productId, $invoiceQuantity, (String) $totalPrice);
-
-        // unset($cart);
-        // session()->forget('cart');
     }
 
 }
